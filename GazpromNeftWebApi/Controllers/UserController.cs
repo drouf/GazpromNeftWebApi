@@ -4,6 +4,9 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace GazpromNeftWebApi.Controllers
 {
@@ -22,29 +25,57 @@ namespace GazpromNeftWebApi.Controllers
         public async Task<IActionResult> Get(long? id = null)
         {
             var request = new GetUserRequest() { Id = id };
-            var users = await _mediator.Send(request);
-            return Ok(users);
+            try
+            {
+                var users = await _mediator.Send(request);
+                return Ok(users);
+            }
+            catch(FluentValidation.ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
         }
 
         [HttpPost(Name = "AddUser")]
         public async Task<IActionResult> Add(CreateUserRequest request)
         {
-            var user = await _mediator.Send(request);
-            return Ok(user);
+            try
+            {
+                var user = await _mediator.Send(request);
+                return Ok(user);
+            }
+            catch (FluentValidation.ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
         }
 
         [HttpPut(Name = "UpdateUser")]
         public async Task<IActionResult> Update(UpdateUserRequest request)
         {
-            var userId = await _mediator.Send(request);
-            return Ok(userId);
+            try
+            {
+                var userId = await _mediator.Send(request);
+                return Ok(userId);
+            }
+            catch (FluentValidation.ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
         }
 
         [HttpDelete(Name = "DeleteUser")]
         public async Task<IActionResult> Delete(DeleteUserRequest request)
         {
-            var userId = await _mediator.Send(request);
-            return NoContent();
+            try
+            {
+                var userId = await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (FluentValidation.ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
         }
     }
 }
