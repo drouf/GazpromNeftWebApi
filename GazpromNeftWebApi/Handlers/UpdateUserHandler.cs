@@ -11,22 +11,15 @@ namespace GazpromNeftWebApi.Handlers
     {
         private readonly GNContext _dbContext;
         private readonly DbSet<User> _users;
-        private readonly UpdateUserValidator _validator;
         private readonly IMapper _mapper;
-        public UpdateUserHandler(GNContext dbContext, IMapper mapper, UpdateUserValidator validator) 
+        public UpdateUserHandler(GNContext dbContext, IMapper mapper) 
         {
             _dbContext = dbContext;
             _users = dbContext.Set<User>();
             _mapper = mapper;
-            _validator = validator;
         }
         public async Task<User?> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
-            var result = _validator.Validate(request);
-            if (!result.IsValid)
-            {
-                throw new FluentValidation.ValidationException(result.Errors);
-            }
             var user = _mapper.Map<User>(request);
             _users.Update(user);
             await _dbContext.SaveChangesAsync();
