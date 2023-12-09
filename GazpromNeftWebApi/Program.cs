@@ -11,10 +11,11 @@ using Microsoft.AspNetCore.Hosting;
 using GazpromNeftWebApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-    //cfg.AddBehavior<LoggingBehavior>();
 });
 
 //handlers
@@ -25,10 +26,8 @@ builder.Services.AddMediatR(cfg => {
     builder.Services.AddScoped<IRequestHandler<UpdateUserRequest, User?>, UpdateUserHandler>();
 }
 
-//builder.Services.AddScoped<IPipelineBehavior, LoggingBehavour<>>
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 // Add services to the container.
 
 builder.Services.AddDbContext<GNContext>(ConfigureUserContextConnection);
