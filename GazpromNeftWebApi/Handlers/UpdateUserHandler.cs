@@ -25,19 +25,12 @@ namespace GazpromNeftWebApi.Handlers
             var result = _validator.Validate(request);
             if (!result.IsValid)
             {
-                return null;
+                throw new FluentValidation.ValidationException(result.Errors);
             }
             var user = _mapper.Map<User>(request);
-            try
-            {
-                _users.Update(user);
-                await _dbContext.SaveChangesAsync();
-                return user;
-            }
-            catch(DbUpdateException e)
-            {
-                return null;
-            }
+            _users.Update(user);
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
     }
 }

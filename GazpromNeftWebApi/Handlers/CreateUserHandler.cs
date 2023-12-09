@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using GazpromNeftWebApi.Db;
 using GazpromNeftWebApi.Models;
 using GazpromNeftWebApi.Requests;
@@ -25,19 +26,12 @@ namespace GazpromNeftWebApi.Handlers
             var result = _validator.Validate(request);
             if (!result.IsValid)
             {
-                return null;
+                throw new ValidationException(result.Errors);
             }
             var user = _mapper.Map<User>(request);
-            try
-            {
-                await _users.AddAsync(user);
-                await _dbContext.SaveChangesAsync();
-                return user;
-            }
-            catch(DbUpdateException e)
-            {
-                return null;
-            }
+            await _users.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
     }
 }
