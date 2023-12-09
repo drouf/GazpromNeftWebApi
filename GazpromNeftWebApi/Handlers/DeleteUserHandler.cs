@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GazpromNeftWebApi.Handlers
 {
-    public class DeleteUserHandler : IRequestHandler<DeleteUserRequest, User?>
+    public class DeleteUserHandler : IRequestHandler<DeleteUserRequest, User>
     {
         private readonly GNContext _dbContext;
         private readonly DbSet<User> _users;
@@ -18,7 +18,7 @@ namespace GazpromNeftWebApi.Handlers
             _users = dbContext.Set<User>();
             _mapper = mapper;
         }
-        public async Task<User?> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
+        public async Task<User> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
             var user = await _users.FirstAsync(u => u.Id == request.Id);
             _users.Remove(user);

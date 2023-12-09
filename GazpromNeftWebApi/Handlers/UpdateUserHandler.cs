@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GazpromNeftWebApi.Handlers
 {
-    public class UpdateUserHandler : IRequestHandler<UpdateUserRequest, User?>
+    public class UpdateUserHandler : IRequestHandler<UpdateUserRequest, User>
     {
         private readonly GNContext _dbContext;
         private readonly DbSet<User> _users;
@@ -18,7 +18,7 @@ namespace GazpromNeftWebApi.Handlers
             _users = dbContext.Set<User>();
             _mapper = mapper;
         }
-        public async Task<User?> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
+        public async Task<User> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
             var user = _mapper.Map<User>(request);
             _users.Update(user);
