@@ -25,9 +25,8 @@ namespace GazpromNeftWebApi.Controllers
         [HttpGet]
         [ProducesResponseType<IEnumerable<User>>(StatusCodes.Status200OK)]
         [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get(long? id = null)
+        public async Task<IActionResult> Get([FromQuery]GetUserRequest request)
         {
-            var request = new GetUserRequest() { Id = id };
             try
             {
                 var users = await _mediator.Send(request);
