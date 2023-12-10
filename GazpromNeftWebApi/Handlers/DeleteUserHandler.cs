@@ -11,18 +11,16 @@ namespace GazpromNeftWebApi.Handlers
     {
         private readonly GNContext _dbContext;
         private readonly DbSet<User> _users;
-        private readonly IMapper _mapper;
-        public DeleteUserHandler(GNContext dbContext, IMapper mapper) 
+        public DeleteUserHandler(GNContext dbContext) 
         {
             _dbContext = dbContext;
             _users = dbContext.Set<User>();
-            _mapper = mapper;
         }
         public async Task<User> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
             var user = await _users.FirstAsync(u => u.Id == request.Id);
             _users.Remove(user);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
             return user;
         }
     }
