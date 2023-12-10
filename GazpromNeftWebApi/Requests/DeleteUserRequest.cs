@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GazpromNeftWebApi.Requests
 {
-    public class DeleteUserRequest : IRequest<User>
+    public class DeleteUserRequest : IRequest
     {
         public long Id { get; set; }
     }
