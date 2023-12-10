@@ -22,8 +22,8 @@ namespace GazpromNeftWebApi.Handlers
         public async Task<User> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             var user = _mapper.Map<User>(request);
-            await _users.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
+            await _users.AddAsync(user, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
             return user;
         }
     }

@@ -22,7 +22,7 @@ namespace GazpromNeftWebApi.Handlers
         {
             var user = _mapper.Map<User>(request);
             _users.Update(user);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
             return user;
         }
     }
