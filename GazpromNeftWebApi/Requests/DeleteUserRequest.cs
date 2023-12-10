@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
+using GazpromNeftDomain.Entities;
 using GazpromNeftWebApi.Db;
-using GazpromNeftWebApi.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GazpromNeftWebApi.Requests
 {
-    public class DeleteUserRequest : IRequest<User>
+    public class DeleteUserRequest : IRequest
     {
         public long Id { get; set; }
     }

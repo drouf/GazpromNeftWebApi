@@ -8,7 +8,6 @@ using GazpromNeftWebApi;
 using GazpromNeftWebApi.Requests;
 using GazpromNeftWebApi.Handlers;
 using Microsoft.AspNetCore.Hosting;
-using GazpromNeftWebApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
@@ -17,14 +16,6 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
-
-//handlers
-{
-    builder.Services.AddScoped<IRequestHandler<CreateUserRequest, User>, CreateUserHandler>();
-    builder.Services.AddScoped<IRequestHandler<DeleteUserRequest, User>, DeleteUserHandler>();
-    builder.Services.AddScoped<IRequestHandler<GetUserRequest, IEnumerable<User>>, GetUserHandler>();
-    builder.Services.AddScoped<IRequestHandler<UpdateUserRequest, User>, UpdateUserHandler>();
-}
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 

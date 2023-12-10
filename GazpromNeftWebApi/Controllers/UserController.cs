@@ -1,4 +1,3 @@
-using GazpromNeftWebApi.Models;
 using GazpromNeftWebApi.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -8,6 +7,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation.Results;
+using GazpromNeftWebApi.DTO;
 
 namespace GazpromNeftWebApi.Controllers
 {
@@ -23,11 +23,10 @@ namespace GazpromNeftWebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType<IEnumerable<User>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status200OK)]
         [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get(long? id = null)
+        public async Task<IActionResult> Get([FromQuery]GetUserRequest request)
         {
-            var request = new GetUserRequest() { Id = id };
             try
             {
                 var users = await _mediator.Send(request);
@@ -40,7 +39,7 @@ namespace GazpromNeftWebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<UserDto>(StatusCodes.Status200OK)]
         [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Add(CreateUserRequest request)
         {
@@ -56,7 +55,7 @@ namespace GazpromNeftWebApi.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<UserDto>(StatusCodes.Status200OK)]
         [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(UpdateUserRequest request)
         {
@@ -72,7 +71,7 @@ namespace GazpromNeftWebApi.Controllers
         }
 
         [HttpPatch]
-        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<UserDto>(StatusCodes.Status200OK)]
         [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Patch(PatchUserRequest request)
         {
