@@ -1,4 +1,4 @@
-﻿using GazpromNeftWebApi.Models;
+﻿using GazpromNeftDomain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GazpromNeftWebApi.Db

@@ -8,7 +8,6 @@ using GazpromNeftWebApi;
 using GazpromNeftWebApi.Requests;
 using GazpromNeftWebApi.Handlers;
 using Microsoft.AspNetCore.Hosting;
-using GazpromNeftWebApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);

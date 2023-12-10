@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
+using GazpromNeftDomain.Entities;
 using GazpromNeftWebApi.Db;
-using GazpromNeftWebApi.Models;
+using GazpromNeftWebApi.DTO;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace GazpromNeftWebApi.Requests
 {
-    public class PatchUserRequest : IRequest<User>
+    public class PatchUserRequest : IRequest<UserDto>
     {
         public long Id { get; set; }
         public string? FirstName { get; set; }

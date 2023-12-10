@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using GazpromNeftWebApi.Models;
+using GazpromNeftDomain.Entities;
+using GazpromNeftWebApi.DTO;
 using GazpromNeftWebApi.Requests;
 
 namespace GazpromNeftWebApi
@@ -11,6 +12,8 @@ namespace GazpromNeftWebApi
             CreateMap<CreateUserRequest,User>();
             CreateMap<UpdateUserRequest,User>();
             CreateMap<PatchUserRequest, User>();
+            CreateMap<User, UserDto>();
+            CreateMap<IEnumerable<User>, IEnumerable<UserDto>>();
         }
     }
 }

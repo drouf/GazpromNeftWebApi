@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using GazpromNeftDomain.Entities;
 using GazpromNeftWebApi.Db;
-using GazpromNeftWebApi.Models;
 using GazpromNeftWebApi.Requests;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
