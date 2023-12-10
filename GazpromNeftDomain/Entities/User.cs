@@ -1,4 +1,4 @@
-﻿namespace GazpromNeftWebApi.Models
+﻿namespace GazpromNeftDomain.Entities
 {
     public class User
     {
