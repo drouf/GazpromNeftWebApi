@@ -18,9 +18,12 @@ namespace GazpromNeftWebApi.Handlers
         }
         public async Task<IEnumerable<User>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
-            if (request.Id == null)
-                return await _users.ToListAsync();
-            return _users.Where(u => u.Id == request.Id);
+            IQueryable<User> query = _dbContext.Set<User>();
+
+            if (request.Id != null)
+                query.Where(u => u.Id == request.Id);
+
+            return await query.ToListAsync();
         }
     }
 }
