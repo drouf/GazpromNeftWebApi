@@ -23,7 +23,7 @@ namespace GazpromNeftWebApi.Requests
 
             RuleFor(c => c.Id)
                 .Must(c => _users.FirstOrDefault(u => u.Id == c) != null || c == null)
-                .WithMessage("Пользователя не существует");
+                .WithMessage("Пользователя с id = {PropertyValue} не существует");
         }
     }
 }
