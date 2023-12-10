@@ -9,6 +9,8 @@ namespace GazpromNeftWebApi
         public AppMappingProfile() 
         {
             CreateMap<CreateUserRequest,User>();
+            CreateMap<UpdateUserRequest,User>();
+            CreateMap<PatchUserRequest, User>();
         }
     }
 }
