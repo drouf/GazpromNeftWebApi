@@ -7,6 +7,7 @@ using System.Text;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
 
 namespace GazpromNeftWebApi.Controllers
 {
@@ -21,7 +22,9 @@ namespace GazpromNeftWebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetUsers")]
+        [HttpGet]
+        [ProducesResponseType<IEnumerable<User>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get(long? id = null)
         {
             var request = new GetUserRequest() { Id = id };
@@ -36,7 +39,9 @@ namespace GazpromNeftWebApi.Controllers
             }
         }
 
-        [HttpPost(Name = "AddUser")]
+        [HttpPost]
+        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Add(CreateUserRequest request)
         {
             try
@@ -50,13 +55,15 @@ namespace GazpromNeftWebApi.Controllers
             }
         }
 
-        [HttpPut(Name = "UpdateUser")]
+        [HttpPut]
+        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(UpdateUserRequest request)
         {
             try
             {
-                var userId = await _mediator.Send(request);
-                return Ok(userId);
+                var user = await _mediator.Send(request);
+                return Ok(user);
             }
             catch (FluentValidation.ValidationException validationException)
             {
@@ -64,12 +71,30 @@ namespace GazpromNeftWebApi.Controllers
             }
         }
 
-        [HttpDelete(Name = "DeleteUser")]
+        [HttpPatch]
+        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Patch(PatchUserRequest request)
+        {
+            try
+            {
+                var user = await _mediator.Send(request);
+                return Ok(user);
+            }
+            catch (FluentValidation.ValidationException validationException)
+            {
+                return BadRequest(validationException.Errors);
+            }
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType<IEnumerable<ValidationFailure>>(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(DeleteUserRequest request)
         {
             try
             {
-                var userId = await _mediator.Send(request);
+                await _mediator.Send(request);
                 return NoContent();
             }
             catch (FluentValidation.ValidationException validationException)
