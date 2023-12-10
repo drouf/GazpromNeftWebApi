@@ -11,12 +11,10 @@ namespace GazpromNeftWebApi.Handlers
     {
         private readonly GNContext _dbContext;
         private readonly DbSet<User> _users;
-        private readonly IMapper _mapper;
-        public GetUserHandler(GNContext dbContext, IMapper mapper)
+        public GetUserHandler(GNContext dbContext)
         {
             _dbContext = dbContext;
             _users = dbContext.Set<User>();
-            _mapper = mapper;
         }
         public async Task<IEnumerable<User>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
