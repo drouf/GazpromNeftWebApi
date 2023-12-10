@@ -18,14 +18,6 @@ builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
-//handlers
-{
-    builder.Services.AddScoped<IRequestHandler<CreateUserRequest, User>, CreateUserHandler>();
-    builder.Services.AddScoped<IRequestHandler<DeleteUserRequest, User>, DeleteUserHandler>();
-    builder.Services.AddScoped<IRequestHandler<GetUserRequest, IEnumerable<User>>, GetUserHandler>();
-    builder.Services.AddScoped<IRequestHandler<UpdateUserRequest, User>, UpdateUserHandler>();
-}
-
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 // Add services to the container.
