@@ -13,7 +13,6 @@ namespace GazpromNeftWebApi
             CreateMap<UpdateUserRequest,User>();
             CreateMap<PatchUserRequest, User>();
             CreateMap<User, UserDto>();
-            CreateMap<IEnumerable<User>, IEnumerable<UserDto>>();
         }
     }
 }
