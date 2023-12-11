@@ -26,7 +26,7 @@ namespace GazpromNeftWebApi.Handlers
 
             var result = await query.ToListAsync();
 
-            return _mapper.Map<IEnumerable<UserDto>>(result);
+            return _mapper.Map<IEnumerable<User>,IEnumerable<UserDto>>(result);
         }
     }
 }

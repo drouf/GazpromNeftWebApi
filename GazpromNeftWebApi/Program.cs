@@ -8,9 +8,12 @@ using GazpromNeftWebApi;
 using GazpromNeftWebApi.Requests;
 using GazpromNeftWebApi.Handlers;
 using Microsoft.AspNetCore.Hosting;
+using NLog;
+using NLog.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.AddMediatR(cfg => {
