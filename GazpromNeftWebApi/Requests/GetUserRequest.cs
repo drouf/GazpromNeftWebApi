@@ -15,15 +15,13 @@ namespace GazpromNeftWebApi.Requests
     {
 
         private readonly GNContext _dbContext;
-        private readonly DbSet<User> _users;
 
         public GetUserValidator(GNContext dbContext)
         {
             _dbContext = dbContext;
-            _users = _dbContext.Set<User>();
 
             RuleFor(c => c.Id)
-                .Must(c => _users.FirstOrDefault(u => u.Id == c) != null || c == null)
+                .Must(c => _dbContext.Set<User>().AsNoTracking().FirstOrDefault(u => u.Id == c) != null || c == null)
                 .WithMessage("Пользователя с id = {PropertyValue} не существует");
         }
     }

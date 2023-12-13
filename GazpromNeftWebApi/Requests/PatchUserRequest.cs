@@ -21,15 +21,13 @@ namespace GazpromNeftWebApi.Requests
     {
 
         private readonly GNContext _dbContext;
-        private readonly DbSet<User> _users;
 
         public PatchUserValidator(GNContext dbContext)
         {
             _dbContext = dbContext;
-            _users = dbContext.Set<User>();
 
             RuleFor(c => c.Id)
-                .Must(c => _users.FirstOrDefault(u => u.Id == c) != null)
+                .Must(c => dbContext.Set<User>().AsNoTracking().FirstOrDefault(u => u.Id == c) != null)
                 .WithMessage("Пользователя с id = {PropertyValue} не существует");
 
             var msgEmpty = "Поле {PropertyName} не заполнено";
