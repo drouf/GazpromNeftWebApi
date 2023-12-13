@@ -19,7 +19,7 @@ namespace GazpromNeftWebApi.Handlers
         }
         public async Task<IEnumerable<UserDto>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
-            IQueryable<User> query = _dbContext.Set<User>();
+            IQueryable<User> query = _dbContext.Set<User>().AsNoTracking();
 
             if (request.Id != null)
                 query.Where(u => u.Id == request.Id);
