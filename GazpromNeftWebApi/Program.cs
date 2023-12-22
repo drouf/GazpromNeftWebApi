@@ -24,14 +24,14 @@ builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 // Add services to the container.
 
-builder.Services.AddDbContext<GNContext>(ConfigureUserContextConnection);
+builder.Services.AddDbContext<GNContext>(ConfigureGNContextConnection);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-void ConfigureUserContextConnection(DbContextOptionsBuilder options)
+void ConfigureGNContextConnection(DbContextOptionsBuilder options)
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Development"))
         .EnableSensitiveDataLogging();
