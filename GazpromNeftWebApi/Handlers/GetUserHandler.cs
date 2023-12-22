@@ -22,7 +22,7 @@ namespace GazpromNeftWebApi.Handlers
             IQueryable<User> query = _dbContext.Set<User>().AsNoTracking();
 
             if (request.Id != null)
-                query.Where(u => u.Id == request.Id);
+                query = query.Where(u => u.Id == request.Id);
 
             var result = await query.ToListAsync();
 
