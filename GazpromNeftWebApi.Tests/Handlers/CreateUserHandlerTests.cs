@@ -5,6 +5,7 @@ using GazpromNeftWebApi.Db;
 using GazpromNeftWebApi.DTO;
 using GazpromNeftWebApi.Handlers;
 using GazpromNeftWebApi.Requests;
+using GazpromNeftWebApi.Tests.StaticClasses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ namespace GazpromNeftWebApi.Tests.Handlers
         {
             // Arrange
             var mockDbContext = new Mock<GNContext>(new DbContextOptions<GNContext>());
-            mockDbContext.Setup(c => c.Set<User>()).Returns(GetTestUsers().AsQueryable().BuildMockDbSet().Object);
+            mockDbContext.Setup(c => c.Set<User>()).Returns(TestUsers.Get().AsQueryable().BuildMockDbSet().Object);
             var handler = new CreateUserHandler(mockDbContext.Object, _mapper);
             
             // Act
@@ -45,15 +46,6 @@ namespace GazpromNeftWebApi.Tests.Handlers
             Assert.IsAssignableFrom<UserDto>(result);
             var expectedUser = _mapper.Map<User,UserDto>(_mapper.Map<CreateUserRequest, User>(GetTestCreateUserRequest()));
             Assert.Equivalent(expectedUser, result);
-        }
-        private IEnumerable<User> GetTestUsers()
-        {
-            return new User[]
-            {
-                new() {Id = 1, FirstName="First", LastName = "First", Patronymic = "First", Phone = "89111111111", Email = "first@mail.ru"},
-                new() {Id = 2, FirstName="Second", LastName = "Second", Patronymic = "Second", Phone = "89222222222", Email = "second@mail.ru"},
-                new() {Id = 3, FirstName="Third", LastName = "Third", Patronymic = "Third", Phone = "89333333333", Email = "third@mail.ru"},
-            };
         }
         private CreateUserRequest GetTestCreateUserRequest()
         {
