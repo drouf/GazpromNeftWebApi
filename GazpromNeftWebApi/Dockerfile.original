@@ -10,7 +10,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["GazpromNeftWebApi/GazpromNeftWebApi.csproj", "GazpromNeftWebApi/"]
-COPY ["GazpromNeftDomain/GazpromNeftDomain.csproj", "GazpromNeftDomain/"]
 RUN dotnet restore "./GazpromNeftWebApi/./GazpromNeftWebApi.csproj"
 COPY . .
 WORKDIR "/src/GazpromNeftWebApi"
